@@ -26,7 +26,7 @@ export default defineSchema({
         email: v.string(),
         tokenIdentifier: v.string(), // Clerk ID
         role: v.union(v.literal("admin"), v.literal("guest")),
-    }).index("by_token", ["tokenIdentifier"]),
+    }).index("by_token", ["tokenIdentifier"]), //protected by auth
 
     appointments: defineTable({
         doctorId: v.optional(v.id("doctors")),
