@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { BookAppointmentModal } from '@/app/_components/BookAppointmentModal';
 
 
-function page() {
+function Page() {
     const params = useParams();
     const doctorId = params.id as Id<"doctors">;
     const doctor = useQuery(api.doctors.getDoctorById, { id: doctorId });
@@ -121,4 +121,4 @@ function page() {
     )
 }
 
-export default page
+export default Page

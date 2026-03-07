@@ -15,24 +15,24 @@ function Stats() {
 
   console.log(stats);
   return (
-    <section className='bg-primary py-12 relative overflow-hidden'>
+    <section className='bg-secondary py-25 relative overflow-hidden my-20'>
             <div className='container mx-auto px-4'>
                 <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
                     {statItems.map((item) => (
                         <div
 
                             key={item.label}
-                            className="flex flex-col items-center text-primary-foreground">
+                            className="flex flex-col items-center text-black">
 
-                            <div className="mb-4 p-3 bg-white/10 rounded-full">
+                            <div className="mb-4 p-3 bg-black/10 rounded-full">
                                 <item.icon className="w-8 h-8" />
                             </div>
 
-                            <h3 className="text-4xl font-bold mb-1">
+                            <h3 className="text-4xl font-bold mb-1 ">
                                 {stats ? item.value.toLocaleString() : "..."}
                                 {item.label === "Happy Patients" && "+"}
                             </h3>
-                            <p className="text-primary-foreground/80 font-medium">{item.label}</p>
+                            <p className="text-black font-medium">{item.label}</p>
 
                         </div>
                     ))}

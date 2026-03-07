@@ -15,12 +15,12 @@ interface DoctorCardProps {
 function DoctorCard({ doctor }: DoctorCardProps) {
     return (
         <Card className='overflow-hidden border-border bg-card/50 hover:bg-card transition-colors hover:border-primary/50 group'>
-            <div className='relative h-50 w-full overflow-hidden'>
+            <div className='relative h-90 w-full overflow-hidden'>
                 <Image
                     src={doctor.image}
                     alt={doctor.name}
                     fill
-                    className="object-contain transition-transform duration-500 group-hover:scale-105"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
 
                 <div className="absolute top-2 right-2">

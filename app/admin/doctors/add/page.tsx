@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -31,7 +31,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 
-function page() {
+function Page() {
     const router = useRouter();
     const categories = useQuery(api.categories.get);
     const createDoctor = useMutation(api.doctors.createDoctor);
@@ -52,7 +52,7 @@ function page() {
     });
     // Update preview when form values change
 
-    React.useEffect(() => {
+    useEffect(() => {
         const subscription = form.watch((value) => {
             setPreviewData(value as FormValues);
         });
@@ -232,4 +232,4 @@ function page() {
     )
 }
 
-export default page
+export default Page

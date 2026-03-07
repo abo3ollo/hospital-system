@@ -10,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQuery } from 'convex/react'
 import { CalendarIcon } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -94,9 +95,11 @@ function Hero() {
             <Button size="lg" className="bg-red-600 hover:bg-red-600/90 text-white border-0">
               Book Appointment
             </Button>
-            <Button size="lg" variant="outline" className="text-red-600  ">
-              Our Doctors
-            </Button>
+            <Link href="/all-doctors">
+              <Button size="lg" variant="outline" className="text-red-600  ">
+                Our Doctors
+              </Button>
+            </Link>
           </div>
         </div>
 
