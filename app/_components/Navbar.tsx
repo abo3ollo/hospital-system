@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { SignInButton, SignUpButton, useAuth, UserButton } from '@clerk/nextjs'
-import { Stethoscope } from 'lucide-react';
+import { Stethoscope, X, Menu } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react'
 
@@ -17,33 +17,22 @@ export default function Navbar() {
   ]
 
   return (
-    <nav className=" sticky top-0 z-50 bg-background/80 border-border border-b  backdrop-blur-md  ">
-      {/* Logo */}
-      <div className='container mx-auto px-4 h-16 flex items-center justify-between'>
-        <Link href="/" className="flex items-center gap-2 text-black text-2xl font-bold">
+    <nav className="sticky top-0 z-50 bg-background/80 border-border border-b backdrop-blur-md">
+      <div className='container mx-auto px-4 h-16 flex items-center justify-between gap-4'>
+
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2 text-foreground text-2xl font-bold shrink-0">
           <Stethoscope className='w-8 h-8' />
           <span>Medcare</span>
         </Link>
 
-        {/* Nav Links */}
-        <button
-          className="lg:hidden flex flex-col justify-center items-center w-10 h-10 ml-auto mr-2"
-          aria-label="Toggle menu"
-          onClick={() => setMenuOpen((v) => !v)}
-        >
-          <span className={`block w-6 h-0.5 bg-white mb-1 transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
-          <span className={`block w-6 h-0.5 bg-white mb-1 transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`}></span>
-          <span className={`block w-6 h-0.5 bg-white transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
-        </button>
-        
-        <ul
-          className={`flex-col lg:flex-row flex lg:flex gap-8 lg:gap-12 list-none m-0 absolute lg:static top-16 left-0 right-0 bg-black lg:bg-transparent border-t lg:border-none border-white/10 lg:rounded-none rounded-b-2xl shadow-lg lg:shadow-none px-6 lg:px-0 py-6 lg:py-0 transition-all duration-300 ${menuOpen ? 'flex' : 'hidden'} lg:flex`}
-        >
+        {/* Desktop Nav Links */}
+        <ul className="hidden lg:flex items-center gap-10 list-none m-0 flex-1 justify-center">
           {navLinks.map((item) => (
             <li key={item.href}>
               <Link
                 href={item.href}
-                className="text-black  text-lg font-medium transition-colors duration-300 hover:text-black/60"
+                className="text-foreground text-base font-medium transition-colors duration-200 hover:text-foreground/60"
               >
                 {item.label}
               </Link>
@@ -51,29 +40,68 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* auth buttons */}
-        <div className='flex items-center gap-4'>
+        {/* Auth Buttons */}
+        <div className='flex items-center gap-3 shrink-0'>
           {isSignedIn ? (
             <UserButton afterSignOutUrl='/' />
           ) : (
-            <div className='flex gap-2'>
+            <div className='hidden lg:flex gap-2'>
               <SignInButton mode='modal'>
-                <Button variant="ghost" size="sm" >
+                <Button variant="ghost" size="sm">Login</Button>
+              </SignInButton>
+              <SignUpButton mode='modal'>
+                <Button size="sm">Signup</Button>
+              </SignUpButton>
+            </div>
+          )}
+
+          {/* Hamburger — mobile only */}
+          <button
+            className="lg:hidden flex items-center justify-center w-10 h-10 rounded-md hover:bg-accent transition-colors"
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            {menuOpen ? (
+              <X className="w-5 h-5 text-foreground" />
+            ) : (
+              <Menu className="w-5 h-5 text-foreground" />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Dropdown */}
+      {menuOpen && (
+        <div className="lg:hidden border-t border-border bg-background/95 backdrop-blur-md px-4 py-4 flex flex-col gap-1">
+          {navLinks.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setMenuOpen(false)}
+              className="text-foreground text-base font-medium py-3 px-3 rounded-md hover:bg-accent transition-colors"
+            >
+              {item.label}
+            </Link>
+          ))}
+
+          {/* Auth in mobile menu (only when signed out) */}
+          {!isSignedIn && (
+            <div className='flex gap-2 mt-3 pt-3 border-t border-border'>
+              <SignInButton mode='modal'>
+                <Button variant="ghost" size="sm" className="flex-1" onClick={() => setMenuOpen(false)}>
                   Login
                 </Button>
               </SignInButton>
               <SignUpButton mode='modal'>
-                <Button size="sm" >
+                <Button size="sm" className="flex-1" onClick={() => setMenuOpen(false)}>
                   Signup
                 </Button>
               </SignUpButton>
             </div>
-
           )}
         </div>
-      </div>
-
-
+      )}
     </nav>
   );
 }
